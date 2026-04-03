@@ -22,13 +22,7 @@ from bs4 import BeautifulSoup
 #  CONFIG  –  from environment variables
 # ─────────────────────────────────────────────
 CONFIG = {
-    "url": (
-        "https://hardverapro.hu/aprok/mobil/mobil/iphone/iphone_16/iphone_16_pro/keres.php"
-        "?stext=&stcid_text=&stcid=&stmid_text=&stmid="
-        "&minprice=210000&maxprice=250000"
-        "&cmpid_text=&cmpid=&usrid_text=&usrid="
-        "&__buying=1&__buying=0&stext_none=&__brandnew=1&__brandnew=0"
-    ),
+    "url":              os.environ.get("MONITOR_URL", ""),
     "interval_seconds": int(os.environ.get("INTERVAL_SECONDS", 3600)),
     "resend_api_key":   os.environ.get("RESEND_API_KEY", ""),
     "email_from":       os.environ.get("EMAIL_FROM", ""),   # e.g. alerts@yourdomain.com
@@ -252,9 +246,11 @@ def check_once(seen: set) -> set:
 def main():
     Path(CONFIG["state_file"]).parent.mkdir(parents=True, exist_ok=True)
 
-    missing = [k for k in ("resend_api_key", "email_from", "email_to") if not CONFIG[k]]
+    missing = [k for k in ("url", "resend_api_key", "email_from", "email_to") if not CONFIG[k]]
     if missing:
-        log.error("Missing required env var(s): %s", ", ".join(k.upper() for k in missing))
+        key_map = {"url": "MONITOR_URL", "resend_api_key": "RESEND_API_KEY",
+                   "email_from": "EMAIL_FROM", "email_to": "EMAIL_TO"}
+        log.error("Missing required env var(s): %s", ", ".join(key_map[k] for k in missing))
         raise SystemExit(1)
 
     log.info("Hardverapro monitor started. Interval: %ds", CONFIG["interval_seconds"])
