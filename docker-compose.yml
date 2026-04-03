@@ -3,6 +3,10 @@ services:
     build: .
     container_name: hardverapro-monitor
     restart: unless-stopped
-    env_file: .env
+    environment:
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - EMAIL_TO=${EMAIL_TO}
+      - INTERVAL_SECONDS=${INTERVAL_SECONDS}
     volumes:
       - ./data:/app/data
