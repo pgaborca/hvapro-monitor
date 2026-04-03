@@ -119,7 +119,7 @@ def _extract_id(url: str) -> str:
 
 def send_email(new_listings: list[dict]):
     count = len(new_listings)
-    subject = f"[Hardverapro] {count} új hirdetés – iPhone 16 Pro keresett"
+    subject = f"[Hardverapro] {count} új hirdetés"
 
     rows_html = ""
     rows_text = ""
@@ -150,8 +150,8 @@ def send_email(new_listings: list[dict]):
       <h2 style="margin:0;color:#fff;font-size:20px;">
         📱 {count} új hirdetés – Hardverapro
       </h2>
-      <p style="margin:6px 0 0;color:rgba(255,255,255,.8);font-size:13px;">
-        iPhone 16 Pro • keresett • 210 000 – 250 000 Ft
+      <p style="margin:6px 0 0;color:rgba(255,255,255,.8);font-size:13px;word-break:break-all;">
+        {CONFIG['url']}
       </p>
     </div>
     <div style="padding:24px 28px;">
@@ -184,7 +184,7 @@ def send_email(new_listings: list[dict]):
 """
 
     text_body = (
-        f"Új Hardverapro hirdetések – iPhone 16 Pro keresett (210k–250k Ft)\n\n"
+        f"Új Hardverapro hirdetések\n\n"
         f"{rows_text}\n{CONFIG['url']}"
     )
 
