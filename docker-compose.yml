@@ -7,6 +7,7 @@ services:
       - RESEND_API_KEY=${RESEND_API_KEY}
       - EMAIL_FROM=${EMAIL_FROM}
       - EMAIL_TO=${EMAIL_TO}
+      - MONITOR_URL=${MONITOR_URL}
       - INTERVAL_SECONDS=${INTERVAL_SECONDS}
     volumes:
       - ./data:/app/data
