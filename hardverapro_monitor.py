@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Hardverapro listing monitor
-Checks for new iPhone 16 Pro "keresett" listings every 60 minutes
+Checks for new listings every INTERVAL_SECONDS seconds (default: 60 minutes)
 and sends an email notification via Resend when new ones appear.
 
 Configuration: set environment variables (see .env.example)
