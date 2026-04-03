@@ -84,8 +84,8 @@ def fetch_listings() -> list[dict]:
     soup = BeautifulSoup(resp.text, "html.parser")
     listings = []
 
-    for item in soup.select("ul.media-list li"):
-        link_tag = item.select_one("a.uad-title")
+    for item in soup.select("li[data-uadid]"):
+        link_tag = item.select_one(".uad-col-title h1 a")
         if not link_tag:
             continue
 
@@ -95,12 +95,12 @@ def fetch_listings() -> list[dict]:
         if href.startswith("/"):
             href = "https://hardverapro.hu" + href
 
-        listing_id = _extract_id(href)
+        listing_id = item.get("data-uadid") or _extract_id(href)
 
-        price_tag = item.select_one(".uad-price")
+        price_tag = item.select_one(".uad-col-title .uad-price span.text-nowrap")
         price = price_tag.get_text(strip=True) if price_tag else "?"
 
-        date_tag = item.select_one(".uad-cdate, time")
+        date_tag = item.select_one(".uad-time time")
         date = date_tag.get_text(strip=True) if date_tag else ""
 
         listings.append({
