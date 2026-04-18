@@ -68,6 +68,7 @@ def save_seen(seen: set):
 # ── Scraping ─────────────────────────────────────────────────────────────────
 
 def fetch_listings() -> list[dict]:
+    log.info("Fetching URL: %s", CONFIG["url"])
     try:
         resp = requests.get(CONFIG["url"], headers=HEADERS, timeout=20)
         resp.raise_for_status()
